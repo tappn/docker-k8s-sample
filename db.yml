@@ -1,0 +1,19 @@
+version: '3'
+services:
+  api:
+    depends_on:
+      - "db"
+  db:
+    image: mysql:5.7
+    container_name: todo-db
+    environment:
+      MYSQL_USER: root
+      MYSQL_DATABASE: todo
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      TZ: "Asia/Tokyo"
+    ports:
+      - 3306:3306
+    volumes:
+      - ./build/db/data:/var/lib/mysql
+      - ./build/db/my.cnf:/etc/mysql/conf.d/my.cnf
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci

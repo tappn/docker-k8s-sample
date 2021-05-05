@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    build: 
+      dockerfile: ./build/api/Dockerfile.dev
+    volumes:
+      - .:/go/src/github.com/tappn/docker-k8s-sample
+    ports:
+      - "2345:2345"
+    security_opt:
+      - "apparmor:unconfined"
+    cap_add:
+      - "SYS_PTRACE"

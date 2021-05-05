@@ -1,0 +1,22 @@
+# local
+FROM golang:1.15.8
+
+WORKDIR src/github.com/tappn/docker-k8s-sample
+
+RUN set -eux && \
+      go get -u github.com/cosmtrek/air && \
+      go get -u github.com/go-delve/delve/cmd/dlv && \
+      go build -o /go/bin/dlv github.com/go-delve/delve/cmd/dlv && \
+      go get -v github.com/rubenv/sql-migrate/...
+
+ENV GO111MODULE=on
+
+COPY go.mod .
+
+COPY go.sum .
+
+RUN go mod download
+
+COPY . .
+
+ENTRYPOINT ["air", "-c", ".air.toml"]
