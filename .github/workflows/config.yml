@@ -8,15 +8,17 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
       - name: set up go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
           go-version: 1.15
 
-      - name: checkout
-        uses: actions/checkout@v1
+      - name: get dependencies
+        run: go get -v -t -d ./...
 
       - name: test
         run: go test ./... -v
