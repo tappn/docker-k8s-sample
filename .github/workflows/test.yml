@@ -19,7 +19,7 @@ jobs:
           go-version: 1.15
 
       - name: get dependencies
-        run: go build -v ./...
+        run: go build -v ./main.go
 
       - name: test
         run: go test -v ./...
