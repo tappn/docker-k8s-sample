@@ -1,8 +1,8 @@
-name: CI
+name: Go
+
 on:
   push:
-    branches:
-    - "**"
+    branches: [ $default-branch ]
 
 jobs:
   test:
