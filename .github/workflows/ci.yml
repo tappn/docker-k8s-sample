@@ -47,5 +47,3 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest . -f './build/api/Dockerfile'
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:latest . -f './build/nginx/Dockerfile'
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:latest
