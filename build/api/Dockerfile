@@ -27,6 +27,6 @@ RUN set -eux && \
   adduser -D -G go go && \
   chown -R go:go /app/api
 
-EXPOSE 9000
+EXPOSE 8080
 
 ENTRYPOINT ["./api"]
