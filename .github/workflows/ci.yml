@@ -1,9 +1,12 @@
-name: CI
+name: ci
 
 on:
   push:
     branches:
-      - '*'
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -20,30 +23,3 @@ jobs:
 
       - name: test
         run: go test -v ./...
-
-  build-and-push:
-    name: build and image push
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: build
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY }}
-          ECR_REPOSITORY_NGINX: ${{ secrets.AWS_ECR_REPOSITORY_NGINX }}
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest . -f './build/api/Dockerfile'
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
