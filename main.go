@@ -39,6 +39,9 @@ func main() {
 	s := service.NewService(r)
 	c := controller.NewController(s)
 
+	// Route
+	e.GET("/", healthCheck)
+
 	// Routes
 	todo := e.Group("/todos")
 	todo.GET("", c.Index)
@@ -49,4 +52,8 @@ func main() {
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func healthCheck(c echo.Context) error {
+	return c.String(http.StatusOK, "ok")
 }
