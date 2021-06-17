@@ -23,6 +23,7 @@ func NewController(service *service.Service) *Controller {
 }
 
 func (c *Controller) Index(ctx echo.Context) error {
+	fmt.Println("aa")
 	todos, err := c.service.GetAll()
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, "")
